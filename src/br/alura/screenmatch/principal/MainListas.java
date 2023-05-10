@@ -4,7 +4,7 @@ import br.alura.screenmatch.modelos.Filme;
 import br.alura.screenmatch.modelos.Serie;
 import br.alura.screenmatch.modelos.Titulo;
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class MainListas {
 
@@ -28,5 +28,24 @@ public class MainListas {
                 System.out.println("Classificação: "+filmeIten.getClassificacao());
             }
         }
+
+        List<String> lista = new LinkedList<String>();
+
+        ArrayList<String>nomes = new ArrayList<>();
+
+        nomes.add("Guilherme");
+        nomes.add("Gabriel");
+        nomes.add("Mariana");
+        nomes.add("Bruno");
+        Collections.sort(nomes);
+        System.out.println(nomes);
+
+        // Criou o comparador na classe e utilizou aqui
+        Collections.sort(listaDeAssistidos);
+        System.out.println(listaDeAssistidos);
+
+        // Utiliza uma nova comparação
+        listaDeAssistidos.sort(Comparator.comparing(Titulo::getAnoDeLancamento));
+        System.out.println(listaDeAssistidos);
     }
 }
