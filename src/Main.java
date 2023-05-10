@@ -4,6 +4,8 @@ import br.alura.screenmatch.modelos.Serie;
 import br.alura.screenmatch.utils.CalculadoraDeTempo;
 import br.alura.screenmatch.utils.FiltroRecomendacoes;
 
+import java.util.ArrayList;
+
 public class Main {
     public static void main(String[] args) {
         Filme filme = new Filme();
@@ -14,8 +16,11 @@ public class Main {
         filme.avaliar(8);
         filme.getFichaTecnica();
         filme.setDuracaoEmMinutos(120);
+        filme.setAnoDeLancamento(2023);
         Filme filme2 = new Filme();
+        filme2.setNome("Vingadores");
         filme2.setDuracaoEmMinutos(100);
+        filme2.setAnoDeLancamento(2019);
 
         Serie serie = new Serie();
         serie.setNome("Flash");
@@ -30,7 +35,7 @@ public class Main {
         calculadora.incluir(filme2);
         System.out.println(calculadora.getTempoTotal());
         calculadora.incluir(serie);
-        System.out.println(calculadora.getTempoTotal());
+        System.out.println(calculadora.getTempoTotal()+ "\r\n");
 
         FiltroRecomendacoes filtro = new FiltroRecomendacoes();
 
@@ -44,6 +49,11 @@ public class Main {
 
         filtro.filtrar(episodio);
 
-
+        ArrayList<Filme> listaDeFilmes = new ArrayList<>();
+        listaDeFilmes.add(filme);
+        listaDeFilmes.add(filme2);
+        System.out.println("\r\nTamanho da lista:"+listaDeFilmes.size());
+        System.out.println("O primeiro fome é " + listaDeFilmes.get(0).getNome() + " e ele tem avaliação de " + listaDeFilmes.get(0).getMedia());
+        System.out.println(listaDeFilmes);
     }
 }

@@ -65,4 +65,9 @@ public class Titulo {
 
         System.out.println(ficha);
     }
+
+    @Override
+    public String toString() {
+        return "Filme: "+ this.nome+" ("+this.anoDeLancamento+")";
+    }
 }
