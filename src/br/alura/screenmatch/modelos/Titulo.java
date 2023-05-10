@@ -6,8 +6,13 @@ public class Titulo {
     private double somaAvaliacao;
     private int totalDeAvaliacoes;
     private  boolean incluidoNoPlano;
-
     private int duracaoEmMinutos;
+
+    public Titulo(String nome, int anoDeLancamento, boolean incluidoNoPlano){
+        this.nome=nome;
+        this.anoDeLancamento=anoDeLancamento;
+        this.incluidoNoPlano=incluidoNoPlano;
+    }
 
     public int getDuracaoEmMinutos() {
         return this.duracaoEmMinutos;
@@ -22,22 +27,13 @@ public class Titulo {
         return this.nome;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
     public int getAnoDeLancamento() {
         return this.anoDeLancamento;
-    }
-
-    public void setAnoDeLancamento(int anoDeLancamento) {
-        this.anoDeLancamento = anoDeLancamento;
     }
 
     public int getTotalDeAvaliacoes() {
         return this.totalDeAvaliacoes;
     }
-
 
     public boolean isIncluidoNoPlano() {
         return incluidoNoPlano;
@@ -68,6 +64,6 @@ public class Titulo {
 
     @Override
     public String toString() {
-        return "Filme: "+ this.nome+" ("+this.anoDeLancamento+")";
+        return "Titulo: "+ this.nome+" ("+this.anoDeLancamento+")";
     }
 }

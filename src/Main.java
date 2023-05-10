@@ -1,6 +1,7 @@
 import br.alura.screenmatch.modelos.Episodio;
 import br.alura.screenmatch.modelos.Filme;
 import br.alura.screenmatch.modelos.Serie;
+import br.alura.screenmatch.modelos.Titulo;
 import br.alura.screenmatch.utils.CalculadoraDeTempo;
 import br.alura.screenmatch.utils.FiltroRecomendacoes;
 
@@ -8,22 +9,17 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-        Filme filme = new Filme();
-        filme.setNome("Meu filme favorito");
+        Filme filme = new Filme("Meu filme favorito",2023,true);
         filme.avaliar(7);
         filme.avaliar(9);
         filme.avaliar(8);
         filme.avaliar(8);
         filme.getFichaTecnica();
         filme.setDuracaoEmMinutos(120);
-        filme.setAnoDeLancamento(2023);
-        Filme filme2 = new Filme();
-        filme2.setNome("Vingadores");
+        Filme filme2 = new Filme("Vingadores",2019);
         filme2.setDuracaoEmMinutos(100);
-        filme2.setAnoDeLancamento(2019);
 
-        Serie serie = new Serie();
-        serie.setNome("Flash");
+        Serie serie = new Serie("Flash",2013,false);
         serie.setTemporadas(9);
         serie.setEpisodios(20);
         serie.setDuracaoPorEpisodio(41);
@@ -49,11 +45,13 @@ public class Main {
 
         filtro.filtrar(episodio);
 
-        ArrayList<Filme> listaDeFilmes = new ArrayList<>();
+        ArrayList<Titulo> listaDeFilmes = new ArrayList<>();
         listaDeFilmes.add(filme);
         listaDeFilmes.add(filme2);
+        listaDeFilmes.add(serie);
         System.out.println("\r\nTamanho da lista:"+listaDeFilmes.size());
         System.out.println("O primeiro fome é " + listaDeFilmes.get(0).getNome() + " e ele tem avaliação de " + listaDeFilmes.get(0).getMedia());
         System.out.println(listaDeFilmes);
+
     }
 }
