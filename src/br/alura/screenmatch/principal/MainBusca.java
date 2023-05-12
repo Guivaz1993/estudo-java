@@ -7,25 +7,41 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
 import java.util.IllegalFormatException;
+import java.util.List;
 import java.util.Scanner;
 
 public class MainBusca {
     public static void main(String[] args) throws IOException, InterruptedException {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Digite um nome de filme");
-        var filme = scanner.nextLine();
+        var busca = "";
+        List<Titulo> titulos = new ArrayList<>();
+        Gson gson = new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE)
+                .setPrettyPrinting()
+                .create();
 
-        //Gson gson = new Gson();
-        Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).create();
+        while (!busca.equalsIgnoreCase("sair")){
 
-        String url = "http://www.omdbapi.com/?t=" + filme.replace(" ", "+") + "&apikey=bfea45bb";
+            System.out.println("Digite um nome de filme para adicionar ou 'sair' para sair.");
+            busca = scanner.nextLine();
+            if(busca.equalsIgnoreCase("sair")){
+                break;
+            }
+
+            //Gson gson = new Gson();
+
+        String url = "http://www.omdbapi.com/?t=" + busca.replace(" ", "+") + "&apikey=bfea45bb";
+
         try {
+
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(url))
@@ -36,11 +52,19 @@ public class MainBusca {
 
             TituloOmdb meuTitulo = gson.fromJson(response.body(), TituloOmdb.class);
 
-
             Titulo classeTitulo = new Titulo(meuTitulo);
 
             classeTitulo.getFichaTecnica();
-        } catch (NumberFormatException | ErroDeDuracaoException e ) {
+
+            titulos.add(classeTitulo);
+
+            System.out.println(titulos);
+
+            FileWriter escrita = new FileWriter("filmes.json");
+
+            escrita.write(gson.toJson(titulos));
+            escrita.close();
+        } catch (NumberFormatException | ErroDeDuracaoException e) {
             System.out.println("Aconteceu um erro: ");
             System.out.println(e.getMessage());
         } catch (IllegalFormatException e) {
@@ -49,4 +73,5 @@ public class MainBusca {
             System.out.println("O programa finalizou corretamente.");
         }
     }
+}
 }
