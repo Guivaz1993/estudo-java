@@ -5,9 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0dc17a56-752b-42a3-83be-0cafbaf853f8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/br/alura/screenmatch/principal/MainBusca.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/br/alura/screenmatch/modelos/TituloOmdb.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Filmes.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Filmes.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/alura/screenmatch/modelos/Titulo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/alura/screenmatch/modelos/Titulo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/alura/screenmatch/principal/MainBusca.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/alura/screenmatch/principal/MainBusca.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,6 +20,7 @@
       <list>
         <option value="Interface" />
         <option value="Class" />
+        <option value="Record" />
       </list>
     </option>
   </component>

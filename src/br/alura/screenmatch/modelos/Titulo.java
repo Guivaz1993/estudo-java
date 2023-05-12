@@ -18,6 +18,13 @@ public class Titulo implements Comparable<Titulo>{
         this.incluidoNoPlano=incluidoNoPlano;
     }
 
+    public Titulo(TituloOmdb meuTitulo) {
+        this.nome = meuTitulo.title();
+        this.anoDeLancamento = Integer.valueOf(meuTitulo.year().replace("–","").replace(" ",""));
+
+        this.duracaoEmMinutos = Integer.valueOf(meuTitulo.runtime().substring(0, meuTitulo.runtime().length()-4));
+    }
+
     public int getDuracaoEmMinutos() {
         return this.duracaoEmMinutos;
     }
@@ -53,6 +60,7 @@ public class Titulo implements Comparable<Titulo>{
     }
 
     public double getMedia(){
+        if(this.totalDeAvaliacoes == 0 ) return 0;
         return this.somaAvaliacao/this.totalDeAvaliacoes;
     }
 
@@ -60,8 +68,9 @@ public class Titulo implements Comparable<Titulo>{
         String ficha = String.format("""
                 Nome: %s;
                 Média: %f;
-                Total de avaliações: %d
-                """ ,this.nome,getMedia(), this.totalDeAvaliacoes);
+                Total de avaliações: %d;
+                Duração: %d min;
+                """ ,this.nome,getMedia(), this.totalDeAvaliacoes,this.duracaoEmMinutos);
 
         System.out.println(ficha);
     }
