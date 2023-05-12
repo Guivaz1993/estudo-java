@@ -2,6 +2,9 @@ package br.alura.screenmatch.modelos;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Titulo implements Comparable<Titulo>{
     @SerializedName("Title")
     private String nome;
@@ -19,10 +22,20 @@ public class Titulo implements Comparable<Titulo>{
     }
 
     public Titulo(TituloOmdb meuTitulo) {
-        this.nome = meuTitulo.title();
-        this.anoDeLancamento = Integer.valueOf(meuTitulo.year().replace("–","").replace(" ",""));
+        final String regex = "\\D";
 
-        this.duracaoEmMinutos = Integer.valueOf(meuTitulo.runtime().substring(0, meuTitulo.runtime().length()-4));
+        final Pattern pattern = Pattern.compile(regex, Pattern.MULTILINE);
+        final Matcher matcherAno = pattern.matcher(meuTitulo.year());
+        final Matcher matcherDuracao = pattern.matcher(meuTitulo.runtime());
+
+        this.nome = meuTitulo.title();
+        this.anoDeLancamento = Integer.valueOf(matcherAno.replaceAll(""));
+
+        if(matcherDuracao.replaceAll("").length()==0){
+            this.duracaoEmMinutos=0;
+        } else{
+            this.duracaoEmMinutos = Integer.valueOf(matcherDuracao.replaceAll(""));
+        }
     }
 
     public int getDuracaoEmMinutos() {
@@ -66,11 +79,11 @@ public class Titulo implements Comparable<Titulo>{
 
     public void getFichaTecnica(){
         String ficha = String.format("""
-                Nome: %s;
+                Nome: %s - %d;
                 Média: %f;
                 Total de avaliações: %d;
                 Duração: %d min;
-                """ ,this.nome,getMedia(), this.totalDeAvaliacoes,this.duracaoEmMinutos);
+                """ ,this.nome,this.anoDeLancamento, getMedia(), this.totalDeAvaliacoes,this.duracaoEmMinutos);
 
         System.out.println(ficha);
     }
