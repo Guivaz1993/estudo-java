@@ -1,24 +1,23 @@
 package br.alura.screenmatch.modelos;
 
-import com.google.gson.annotations.SerializedName;
+import br.alura.screenmatch.excecao.ErroDeDuracaoException;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Titulo implements Comparable<Titulo>{
-    @SerializedName("Title")
+public class Titulo implements Comparable<Titulo> {
+    // @SerializedName("Title")
     private String nome;
-    @SerializedName("Year")
     private int anoDeLancamento;
     private double somaAvaliacao;
     private int totalDeAvaliacoes;
-    private  boolean incluidoNoPlano;
+    private boolean incluidoNoPlano;
     private int duracaoEmMinutos;
 
-    public Titulo(String nome, int anoDeLancamento, boolean incluidoNoPlano){
-        this.nome=nome;
-        this.anoDeLancamento=anoDeLancamento;
-        this.incluidoNoPlano=incluidoNoPlano;
+    public Titulo(String nome, int anoDeLancamento, boolean incluidoNoPlano) {
+        this.nome = nome;
+        this.anoDeLancamento = anoDeLancamento;
+        this.incluidoNoPlano = incluidoNoPlano;
     }
 
     public Titulo(TituloOmdb meuTitulo) {
@@ -31,9 +30,11 @@ public class Titulo implements Comparable<Titulo>{
         this.nome = meuTitulo.title();
         this.anoDeLancamento = Integer.valueOf(matcherAno.replaceAll(""));
 
-        if(matcherDuracao.replaceAll("").length()==0){
-            this.duracaoEmMinutos=0;
-        } else{
+        if (matcherDuracao.replaceAll("").length() == 0) {
+            // Foi feito para poder estudar sobre o tratamento de erro.
+            throw new ErroDeDuracaoException("Duração inválida.");
+            // this.duracaoEmMinutos = 0;
+        } else {
             this.duracaoEmMinutos = Integer.valueOf(matcherDuracao.replaceAll(""));
         }
     }
@@ -72,25 +73,25 @@ public class Titulo implements Comparable<Titulo>{
         this.totalDeAvaliacoes++;
     }
 
-    public double getMedia(){
-        if(this.totalDeAvaliacoes == 0 ) return 0;
-        return this.somaAvaliacao/this.totalDeAvaliacoes;
+    public double getMedia() {
+        if (this.totalDeAvaliacoes == 0) return 0;
+        return this.somaAvaliacao / this.totalDeAvaliacoes;
     }
 
-    public void getFichaTecnica(){
+    public void getFichaTecnica() {
         String ficha = String.format("""
                 Nome: %s - %d;
                 Média: %f;
                 Total de avaliações: %d;
                 Duração: %d min;
-                """ ,this.nome,this.anoDeLancamento, getMedia(), this.totalDeAvaliacoes,this.duracaoEmMinutos);
+                """, this.nome, this.anoDeLancamento, getMedia(), this.totalDeAvaliacoes, this.duracaoEmMinutos);
 
         System.out.println(ficha);
     }
 
     @Override
     public String toString() {
-        return "Titulo: "+ this.nome+" ("+this.anoDeLancamento+")";
+        return "Titulo: " + this.nome + " (" + this.anoDeLancamento + ")";
     }
 
     @Override

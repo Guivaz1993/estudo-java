@@ -1,5 +1,6 @@
 package br.alura.screenmatch.principal;
 
+import br.alura.screenmatch.excecao.ErroDeDuracaoException;
 import br.alura.screenmatch.modelos.Titulo;
 import br.alura.screenmatch.modelos.TituloOmdb;
 import com.google.gson.FieldNamingPolicy;
@@ -11,6 +12,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.IllegalFormatException;
 import java.util.Scanner;
 
 public class MainBusca {
@@ -22,23 +24,29 @@ public class MainBusca {
         //Gson gson = new Gson();
         Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).create();
 
-        String url = "http://www.omdbapi.com/?t=" + filme + "&apikey=bfea45bb";
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .build();
+        String url = "http://www.omdbapi.com/?t=" + filme.replace(" ", "+") + "&apikey=bfea45bb";
+        try {
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(url))
+                    .build();
 
-        HttpResponse<String> response = client
-                .send(request, HttpResponse.BodyHandlers.ofString());
+            HttpResponse<String> response = client
+                    .send(request, HttpResponse.BodyHandlers.ofString());
 
-        // Titulo meuTitulo = gson.fromJson(response.body(), Titulo.class);
-        TituloOmdb meuTitulo = gson.fromJson(response.body(),TituloOmdb.class);
+            TituloOmdb meuTitulo = gson.fromJson(response.body(), TituloOmdb.class);
 
-        System.out.println("Api: "+meuTitulo);
 
-        Titulo classeTitulo = new Titulo(meuTitulo);
+            Titulo classeTitulo = new Titulo(meuTitulo);
 
-        classeTitulo.getFichaTecnica();
-
+            classeTitulo.getFichaTecnica();
+        } catch (NumberFormatException | ErroDeDuracaoException e ) {
+            System.out.println("Aconteceu um erro: ");
+            System.out.println(e.getMessage());
+        } catch (IllegalFormatException e) {
+            System.out.println("Aconteceu um erro: Verifique o nome do filme se está correto");
+        } finally {
+            System.out.println("O programa finalizou corretamente.");
+        }
     }
 }
